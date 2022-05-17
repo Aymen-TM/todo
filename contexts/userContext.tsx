@@ -3,7 +3,10 @@ import useFirebaseAuth from '../hooks/useFirebaseAuth';
 
 const authUserContext = createContext({
   authUser: null,
-  loading: true
+  loading: true,
+  signInWithEmailAndPassword:() => {},
+  createUserWithEmailAndPassword:() => {},
+  signOut:() => {}
 });
 
 export function AuthUserProvider({ children }:any) {
