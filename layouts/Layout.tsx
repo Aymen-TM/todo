@@ -11,7 +11,7 @@ type Props = {
 
 function Layouts({children}: Props) {
     let { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen:false})
-    const { authUser, loading } = useAuth();
+    const { authUser, loading,signOut_ } = useAuth();
   return (
     <>
     <Head>
@@ -21,7 +21,7 @@ function Layouts({children}: Props) {
     <Flex bgColor={'#080a0b'} height={"100vh"}>
         {authUser && <CustomDrawer isOpen={isOpen} onClose={onClose} onOpen={onOpen}  />}
         <VStack w={'full'}>
-            {authUser && <Navbar isOpen={isOpen} onClose={onClose} onOpen={onOpen} />}
+            {authUser && <Navbar isOpen={isOpen} onClose={onClose} onOpen={onOpen} signOut={signOut_} />}
             <Box as="main"  w={"full"}  h={'full'} overflow={'auto'}   >
                 <Container maxW={"1440px"} mx={"auto"} h={'full'} py={4} >
                     {children}

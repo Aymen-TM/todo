@@ -14,19 +14,20 @@ const Home: NextPage = () => {
 
   // Listen for changes on loading and authUser, redirect if needed
   useEffect(() => {
-    if (!loading && !authUser)
+    if (authUser == null && !loading){
       router.push('/Signin')
-  }, [authUser, loading])
+    }else{
+      return;
+    }
+      
+  }, [authUser,loading])
 
 
   return (
     <>
         <SimpleGrid columns={{base:1,lg:3}} spacing={10}>
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-         </SimpleGrid>
+          
+        </SimpleGrid>
     </>
   )
 }

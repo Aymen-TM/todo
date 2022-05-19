@@ -31,16 +31,17 @@ export default function useFirebaseAuth() {
     setLoading(true);
   };
 
-  const signIn_WithEmailAndPassword=  (email:string, password:string)=>{
-     signInWithEmailAndPassword(auth,email,password)
+  function signIn_WithEmailAndPassword(email:string, password:string){
+    return signInWithEmailAndPassword(auth,email,password)
   }
 
-  const createUser_WithEmailAndPassword =  (email:string, password:string) =>{
-      createUserWithEmailAndPassword(auth,email, password);
+   function createUser_WithEmailAndPassword(email:string, password:string){
+   return createUserWithEmailAndPassword(auth, email, password);
+    
   }
 
-  const signOut_ =  () =>{
-    signOut(auth).then(clear)
+  function signOut_(){
+    return signOut(auth).then(clear)
   }
 
 

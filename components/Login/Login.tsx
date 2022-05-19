@@ -16,7 +16,9 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import * as React from 'react'
+import {useState} from 'react'
 import { useCustomColorMode } from '../../contexts/colorContext'
+import { useAuth } from '../../contexts/userContext'
 import  OAuthButtonGroup  from './OAuthButtonGroup'
 import { PasswordField } from './PasswordField'
 
@@ -26,7 +28,28 @@ import { PasswordField } from './PasswordField'
 type Props = {}
 
 function Login({}: Props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const router = useRouter();
+  const { signIn_WithEmailAndPassword } = useAuth();
+
+  const onSubmit = (event:React.MouseEvent<HTMLButtonElement>) => {
+    setError(null)
+    signIn_WithEmailAndPassword(email, password)
+    .then(authUser => {
+      router.push('/');
+      console.log(authUser);
+    })
+    .catch(error => {
+      setError(error.message)
+    });
+    event.preventDefault();
+  };
+
+
+
+
   const {bg,textColor} = useCustomColorMode()
   return (
     <Container maxW="lg" py={{ base: '12' }} px={{ base: '0', sm: '8' }} bgColor={bg} rounded={"md"}>
@@ -55,9 +78,9 @@ function Login({}: Props) {
           <Stack spacing="5">
             <FormControl color={textColor}>
               <FormLabel htmlFor="email" >Email</FormLabel>
-              <Input id="email" type="email" />
+              <Input id="email" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
             </FormControl>
-            <PasswordField color={textColor} />
+            <PasswordField color={textColor} onChange={(e: { target: { value: React.SetStateAction<string> } })=>setPassword(e.target.value)} value={password} />
           </Stack>
           <HStack justify="space-between">
             <Checkbox defaultChecked color={textColor}>Remember me</Checkbox>
@@ -66,7 +89,7 @@ function Login({}: Props) {
             </Button>
           </HStack>
           <Stack spacing="6">
-            <Button variant="solid" >SIGN IN</Button>
+            <Button variant="solid" onClick={(e)=>onSubmit(e)} >SIGN IN</Button>
             <HStack>
               <Divider />
               <Text fontSize="sm" whiteSpace="nowrap"  color={textColor}>
